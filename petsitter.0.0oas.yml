@@ -3,7 +3,7 @@ info:
   title: PetSitter API
   version: "0.1"
 paths: 
-  / users: 
+  /users: 
      post:
        summary: Registers user
        requestBody:
@@ -18,8 +18,8 @@ paths:
              Location:
                schema:
                  type: string
-  / users/{id}:
-      parameters:
+  /users/{id}:
+     parameters:
         - schema:
             type: integer
           name: id
@@ -53,6 +53,27 @@ paths:
         responses:
           '204': 
             description: No content
+  /users/{id}/jobs:
+    parameters: 
+      - schema:
+          type: integer
+        name: id
+        in: path
+        required: true
+    get:
+        summary: Retrieves a list of jobs of a specific user
+        responses:
+          '200':
+            description: OK
+            content:
+              application/json:
+                schema:
+                  type: object
+                  properties:
+                    items:
+                      type: array
+                      items:
+                        $ref: '#/components/schemas/Job'
   /jobs: 
       post: 
         summary: Creates a Job
@@ -82,6 +103,41 @@ paths:
                         type: array
                         items: 
                           $ref: '#/components/schemas/Job'
+  /jobs/{id}:
+      parameters:
+        - schema:
+            type: integer
+          name: id
+          in: path
+          required: true
+      get:
+        summary: Views a specific job
+        responses:
+            '200':
+              description: OK
+              content:
+                application/json:
+                  schema:
+                    $ref: '#/components/schemas/Job'
+      put: 
+        summary: Updates a job
+        requestBody: 
+          content:
+            application/json:
+              schema: 
+                $ref: '#/components/schemas/Job'
+        responses: 
+          '200':  
+            description: OK
+            content: 
+              application/json:
+                schema:  
+                  $ref: '#/components/schemas/Job'
+      delete:
+        summary: Deletes a job
+        responses: 
+          '204:
+             description: No content
   /jobs/{id}/job-applications:
       parameters:
         - schema:
@@ -140,62 +196,8 @@ paths:
                  application/json:
                    schema:
                       $ref: '#/components/schemas/JobApplication'
-  /users/{id}/jobs:
-    parameters: 
-      - schema:
-          type: integer
-        name: id
-        in: path
-        required: true
-    get:
-        summary: Retrieves a list of jobs of a specific user
-        responses:
-          '200':
-            description: OK
-            content:
-              application/json:
-                schema:
-                  type: object
-                  properties:
-                    items:
-                      type: array
-                      items:
-                        $ref: '#/components/schemas/Job'
-  /jobs/{id}:
-      parameters:
-        - schema:
-            type: integer
-          name: id
-          in: path
-          required: true
-      get:
-        summary: Views a specific job
-        responses:
-            '200':
-              description: OK
-              content:
-                application/json:
-                  schema:
-                    $ref: '#/components/schemas/Job'
-      put: 
-        summary: Updates a job
-        requestBody: 
-          content:
-            application/json:
-              schema: 
-                $ref: '#/components/schemas/Job'
-        responses: 
-          '200':  
-            description: OK
-            content: 
-              application/json:
-                schema:  
-                  $ref: '#/components/schemas/Job'
-      delete:
-        summary: Deletes a job
-        responses: 
-          '204:
-             description: No content
+  
+
                         
         
           
